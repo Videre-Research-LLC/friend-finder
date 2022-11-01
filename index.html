@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="https://friendfinder.videre.us/Globe.png" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-startup-image" href="https://friendfinder.videre.us/Globe.png" />
+  <link rel="apple-touch-icon" href="https://friendfinder.videre.us/Globe.png" />
+  <meta name=apple-mobile-web-app-title content="GPS Friend Finder">
+  <link rel="apple-touch-icon-precomposed" href="https://friendfinder.videre.us/Globe.png" />
+
+  <link rel=icon sizes=192x192 href="https://friendfinder.videre.us/Globe.png">
+  <meta name=msapplication-TileImage content="https://friendfinder.videre.us/Globe.png">
+  <meta name=msapplication-TileColor content=#3372DF>
+
+  <meta property=dc:creator content="Videre Research, LLC" />
+
+  <title>GPS Friend Finder</title>
+  <meta name="description"
+    content="GPS Friend Finder Location Sharing App - The mobile location-sharing app that makes it exceptionally easy for anyone to get together. No registration required, total anonimity!" />
+  <meta name="keywords" content="location-sharing, mobile, app, free, meeting, party, geolocation, navigation, map" />
+  <meta name="author" content="Videre Research, LLC">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="theme-color" content="#5FD4AF">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <!-- Material Design Lite -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-red.min.css" />
+
+  <link type="text/css" rel="stylesheet" href="dist/firebaseui.css" />
+
+  <link rel="stylesheet" href="styles/styles.css">
+  <!-- App Styling -->
+  <link href="styles/geo.css" rel="stylesheet" type="text/css" media="screen" />
+
+</head>
+
+<body>
+  <app-root></app-root>
+  <noscript>
+    JavaScript is required to run this application.
+  </noscript>
+
+  <!-- Simple header with fixed tabs. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+                    mdl-layout--fixed-tabs">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row thin-row">
+        <span class="mdl-layout-title">GPS Friend Finder</span>
+        <div class="mdl-layout-spacer"></div>
+
+        <span class="mdl-chip mdl-chip--small">
+          <i id="gps-icon" class="material-icons mdl-chip--small" style="background-color: #dd2c00;">gps_off</i>
+          <i id="center-icon" class="material-icons mdl-chip--small">location_on</i>
+        </span>
+
+        <!-- Right aligned menu below button -->
+        <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">more_vert</i>
+        </button>
+
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="demo-menu-lower-right">
+
+          <li class="mdl-menu__item" onclick="map.setMapTypeId(google.maps.MapTypeId.HYBRID);return false;"><i
+              class="material-icons">map</i>Hybrid</li>
+          <li class="mdl-menu__item" onclick="map. setMapTypeId(google.maps.MapTypeId.ROADMAP);return false;"><i
+              class="material-icons">time_to_leave</i>Road</li>
+          <li class="mdl-menu__item" onclick="map.setMapTypeId(google.maps.MapTypeId.SATELLITE);return false;"><i
+              class="material-icons">satellite_alt</i>Satellite</li>
+          <li class="mdl-menu__item" onclick="map.setMapTypeId(google.maps.MapTypeId.TERRAIN);return false;"><i
+              class="material-icons">terrain</i>Terrain</li>
+          <li class="mdl-menu__item mdl-menu__item--full-bleed-divider" onclick="map.setMapTypeId('OSM');return false;">
+            <i class="material-icons">layers</i>Open Street Map
+          </li>
+
+          <li class="mdl-menu__item" onclick="setNight();return false;"><i class="material-icons">brightness_2</i>Night
+            Colors</li>
+          <li class="mdl-menu__item" onclick="setDay();return false;"><i class="material-icons">brightness_5</i>Day
+            Colors</li>
+        </ul>
+
+      </div>
+      <!-- Tabs -->
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a id="tab-1" href="#fixed-tab-1" class="mdl-layout__tab is-active"><i id="count"
+            class="material-icons mdl-badge mdl-badge--overlap">public</i></a>
+        <!-- <a id="tab-2" href="#fixed-tab-2" class="mdl-layout__tab"><i class="material-icons">account_box</i></a> -->
+        <a id="tab-3" href="#fixed-tab-3" class="mdl-layout__tab"><i class="material-icons">settings</i></a>
+        <a id="tab-4" href="#fixed-tab-4" class="mdl-layout__tab"><i class="material-icons">info</i></a>
+      </div>
+    </header>
+
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Users</span>
+      <ul id="contactList" class="demo-list-icon mdl-list">
+      </ul>
+
+      <ul id="contactListEmpty" class="demo-list-icon mdl-list">
+        <li class="mdl-list__item mdl-list__item--three-line">
+          <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-avatar">supervised_user_circle</i>
+            <span class="mdl-list__item-text-body">
+              There are currently no other users around your location.
+            </span>
+          </span>
+        </li>
+      </ul>
+
+
+    </div>
+
+
+
+
+    <main id=main_content class="mdl-layout__content">
+      <div id=spinner class="mdl-spinner mdl-js-spinner is-active"></div>
+
+      <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <div class="page-content">
+          <!-- Your content goes here -->
+
+          <div id="map-canvas" class="demo-card-map mdl-card">
+            <button id="demo-menu-lower-right2"
+              style="z-index: 999999999; color: #577381; background-color:rgba(190, 203, 203,.45)"
+              class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">apps</i>
+            </button>
+
+
+            <ul class="demo-list-control2 mdl-list mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+              for="demo-menu-lower-right2">
+
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons  ">share_location</i>
+                  Lat:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-lat" value="0"></input>
+                </span>
+              </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons  ">share_location</i>
+                  Lon:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-lon" value="0"></input>
+                </span>
+              </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons">satellite</i>
+                  Accuracy:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-acc" value="0"></input>
+                </span>
+              </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons">terrain</i>
+                  Altitude:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-alt" value="0"></input>
+                </span>
+              </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons">speed</i>
+                  Speed:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-spd" value="0"></input>
+                </span>
+              </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons">explore</i>
+                  Heading:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-hea" value="0"></input>
+                </span>
+              </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content nospace">
+                  <i class="material-icons">timer</i>
+                  Last Updated:
+                </span>
+                <span class="mdl-list__item-secondary-action">
+                  <input disabled class="mdl-textfield__input" type="text" id="text-upd" value=""></input>
+                </span>
+              </li>
+            </ul>
+
+            <div class="mdl-layout-spacer"></div>
+
+            <div id="map-page">
+              <div class="mdl-spinner mdl-js-spinner is-active"></div> 
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mdl-layout__tab-panel mdl-layout-center" id="fixed-tab-3">
+        <div class="page-content">
+
+          <div class="mdl-card demo-card-wide">
+
+            <div class="mdl-card__supporting-text">
+
+              <a hidden class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect auth-only" href="#"
+                onclick="signOut();return false;"><i class="material-icons">lock_open</i>Logout</a>
+
+              <ul class="demo-list-control mdl-list">
+
+                <li id="gps-warning" class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content" style="color:#dd2c00;">
+                    <i class="material-icons  ">warning</i>
+                    You will not receive anyone's location unless your GPS location is Enabled.</br>
+                  </span>
+                </li>
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <i class="material-icons  ">my_location</i>
+                  Enable GPS Location:
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" id=list-switch-1-label for="list-switch-1">
+                    <input type="checkbox" id="list-switch-1" class="mdl-switch__input" />
+                  </label>
+                </span>
+                </li>
+                <li><hr></li>
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <i class="material-icons">center_focus_weak</i>
+                  Center map on my position:
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-2">
+                    <input type="checkbox" id="list-switch-2" class="mdl-switch__input" checked />
+                  </label>
+                  </span>
+                </li>
+                <li><hr></li>
+
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <i class="material-icons ">account_box</i>
+                    My Display Name:
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <div class="mdl-textfield mdl-js-textfield">
+                      <input id="display-name" class="mdl-textfield__input" type="text" pattern="[A-Z,a-z,0-9, ,-]*">
+                      <label class="mdl-textfield__label" for="display-name">Display Name</label>
+                      <span class="mdl-textfield__error">Only letters and numbers, no spaces</span>
+                    </div>
+
+                  </span>
+                </li>
+                <li><hr></li>
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <i class="material-icons  ">tune</i>
+                    Display Units:
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                      <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked
+                        onclick="changeMetric();">
+                      <span class="mdl-radio__label">Kilometers</span>
+                    </label>
+                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                      <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2"
+                        onclick="changeMetric();">
+                      <span class="mdl-radio__label">Miles</span>
+                    </label>
+                  </span>
+                </li>
+                <li><hr></li>
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <i class="material-icons  ">compass_calibration</i>
+                    Declination:
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <!-- <form> -->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input id="text-decl" class="mdl-textfield__input" type="text">
+                      <!-- <input id="text-decl" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"> -->
+                      <label class="mdl-textfield__label" for="text-decl">Magnetic North</label>
+                      <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+                  </span>
+                </li>
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-secondary-action">
+                      <span class="mdl-list__item-secondary-action">
+                        <button id="get-noaa" class="mdl-button mdl-js-button mdl-button--raised">
+                          Get Declination
+                        </button>
+                      </span>
+                    </span>
+                </li>
+                <li><hr></li>
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-secondary-action">
+                      <span class="mdl-list__item-secondary-action">
+                        <button id="get-noaa" class="mdl-button mdl-js-button mdl-button--raised" onclick="document.getElementById('tab-1').click(); document.querySelector('#popupGeoLocation').showModal(); return false;">
+                          Show Directions
+                        </button>
+                      </span>
+                    </span>
+                </li>
+              </ul>
+
+              v3.83
+              <div hidden id="account-details"></div>
+
+
+            </div><!-- Supporting Text -->
+          </div>
+      </section>
+
+
+
+      <section class="mdl-layout__tab-panel" id="fixed-tab-4">
+        <div class="page-content">
+          <!-- Your content goes here -->
+
+
+          <div class="mdl-card demo-card-wide">
+
+            <div class="mdl-card__supporting-text">
+
+              <h3>GPS Friend Finder</h3>
+              <p>Display the location of users currently using this app in a 150 kilometers (90 miles) radius around your
+                location. Safe, simple, and completely anonymous.</p>
+              <p>
+
+              <p align="center">Invite your friends to use this FREE webapp, no download or install needed, no account
+                required.</br>
+
+                <button class="mdl-button mdl-js-button mdl-button--fab">
+                  <a
+                    href="mailto:?subject=Let's meet&amp;body=Find me using this webapp https://friendfinder.videre.us"><i
+                      class="material-icons">email</i></a>
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--fab">
+                  <a href="sms: &amp;body=Find me using this webapp https://friendfinder.videre.us"><i
+                      class="material-icons">message</i></a>
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--fab">
+                  <a href="http://www.videreresearch.com/projects/geolocation-web-application/user-manual"><i
+                      class="material-icons">menu_book</i></a>
+                </button>
+              </p>
+
+              <p align="center"><img src="images/generate.svg" width=100%></p>
+
+
+              <p>An application by: <a href="http://www.videreresearch.com/projects/geolocation-web-application"
+                  target="_blank">Videre Research, LLC</a></p>
+              <p align="center">By accessing this application you hereby agree to the terms of our</br>
+                <a href="http://www.videreresearch.com/software-disclaimer" target="_blank"><button
+                    class="mdl-button mdl-js-button mdl-button--raised">
+                    Software Disclaimer
+                  </button></a></br>and our</br>
+
+                <a href="http://www.videreresearch.com/privacy-policy" target="_blank"><button
+                    class="mdl-button mdl-js-button mdl-button--raised">
+                    Privacy Policy
+                  </button></a>
+              </p>
+              <p align="center">*Google Maps is a trademark of Google Inc. By using this software, you agree to the
+                terms and conditions of the Google Maps API.<br />
+
+              <p align="center"><img src="Globe.png"></p>
+
+            </div>
+
+          </div>
+
+          <!-- </div> -->
+
+        </div>
+      </section>
+
+
+
+    </main>
+
+
+    <div id="my-snackbar" aria-live="assertive" aria-atomic="true" aria-relevant="text"
+      class="mdl-js-snackbar mdl-snackbar mdc-snackbar--multiline">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button">OK</button>
+    </div>
+
+    <div id="my-error-snackbar" aria-live="assertive" aria-atomic="true" aria-relevant="text"
+      class="mdl-js-snackbar mdl-snackbar mdc-snackbar--multiline">
+      <div class="mdl-snackbar__icon"><i id="my-snackbar-icon" class="material-icons">info</i></div>
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button">OK</button>
+    </div>
+
+
+    <footer hidden id="adBlocked" class="mdl-mini-footer">
+      <h4>Please help us keep this app free and disable adblock.</h4>
+    </footer>
+
+    <dialog id="popupGeoLocation" class="mdl-dialog">
+      <h4 class="mdl-dialog__title">Directions</h4>
+      <div id="directions" class="mdl-dialog__content">
+        There are currently no directions. To get directions, click on the <i class="material-icons">route</i> button in someone's location marker.
+      </div>
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button close" onclick="document.querySelector('#popupGeoLocation').close();return false;">Close</button>
+      </div>
+    </dialog>
+
+
+    <dialog id="newDialog" class="mdl-dialog">
+      <h4 class="mdl-dialog__title">New Marker</h4>
+      <div class="mdl-dialog__content">
+
+        <form action="#">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="markerTitleNew">
+            <label class="mdl-textfield__label" for="markerTitleNew">Title</label>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield">
+            <textarea class="mdl-textfield__input" type="text" rows="3" maxrows="6" id="markerTextNew"></textarea>
+            <label class="mdl-textfield__label" for="markerTextNew">Content</label>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <select class="mdl-textfield__input" id="type" name="type">
+              <option></option>
+              <option value="note">Note</option>
+              <option value="event">Event</option>
+              <option value="photo">Photo</option>
+            </select>
+            <label class="mdl-textfield__label" for="type">Marker Type</label>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button close"
+          onclick="document.querySelector('#newDialog').close();return false;">Close</button>
+        <button type="button" class="mdl-button" onclick="addNote();return false;">Save</button>
+      </div>
+
+    </dialog>
+
+
+
+    <dialog id="editDialog" class="mdl-dialog">
+      <h4 class="mdl-dialog__title">Edit Marker</h4>
+      <div class="mdl-dialog__content">
+
+        <form action="#">
+          <input type="hidden" id="markerid" name="none" value="">
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="markerTitleEdit">
+            <label class="mdl-textfield__label" for="markerTitleEdit">Title</label>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield">
+            <textarea class="mdl-textfield__input" type="text" rows="3" maxrows="6" id="markerTextEdit"></textarea>
+            <label class="mdl-textfield__label" for="markerTextEdit">Content</label>
+          </div>
+
+        </form>
+      </div>
+
+
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button close"
+          onclick="document.querySelector('#editDialog').close();return false;">Close</button>
+        <button type="button" class="mdl-button" onclick="saveEditedNote();return false;">Save</button>
+      </div>
+    </dialog>
+
+
+  </div>
+
+
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://unpkg.com/geofirestore/dist/geofirestore.js"></script>
+
+  <script src="config.js"></script>
+  <script src="common.js"></script>
+
+  <script src="dist/firebaseui.js"></script>
+  <script src="geo.js" charset="utf-8"></script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?libraries=geometry&callback=initMap&key=<redacted>"></script>
+
+</body>
+
+</html>

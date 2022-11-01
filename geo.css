@@ -1,0 +1,378 @@
+.mdl-card__supporting-text {
+  width: 90%;
+}
+
+.mdl-list__item,
+.mdl-list__item-primary-content {
+  padding-left: 5px;
+  padding-right: 15px;
+  color: #4f7482;
+  margin: 0px;
+  min-height: 34px;
+}
+
+.mdl-list__item,
+.mdl-list__item-primary-content .nospace {
+  padding-left: 5px;
+  padding-right: 15px;
+  padding-top: 0;
+  padding-bottom: 0;
+  color: #849196;
+  margin: 0px;
+  min-height: 34px;
+}
+
+input:disabled {
+  color: #021116;
+}
+
+
+.mdl-button,
+.mdl-button .material-icons {
+  margin-right: 10px;
+  margin-left: 0px;
+  color: #075b9e;
+}
+
+.material-icons {
+  vertical-align: middle;
+}
+
+.mdl-menu__item .material-icons {
+  margin-right: 0.5em;
+}
+
+.mdl-button {
+  margin: 5px;
+  text-transform: none;
+}
+
+@media screen and (max-width: 390px) {
+  .demo-card-wide>.mdl-card__title {
+    height: 70px;
+  }
+}
+
+
+#map-page {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: #000;
+  position: absolute !important;
+}
+
+#map-canvas {
+  width: 100%;
+  height: 90%;
+  padding: 0;
+  background-color: #000;
+  position: absolute !important;
+}
+
+
+.outer-wrap {
+  /* Must have some sort of height and width so that
+    inner children (map and overlay) can position
+    themselves to it */
+  height: 500px;
+  width: 500px;
+  position: relative;
+}
+
+map,
+div.overlay {
+  /* This stretches the these elements to the edges of
+    the closest element upwards in the DOM with a relative
+    positioning (in this case it's the .outer-wrap) */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px
+}
+
+.demo-card-map {
+  position: absolute;
+  min-height: 100% !important;
+  margin: 0px;
+  min-width: 100px;
+  height: 800px;
+  width: 100%;
+}
+
+.demo-card-wide {
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  min-width: 40%;
+  /* margin: 0px; */
+}
+
+.demo-card-wide.mdl-card:hover {
+  box-shadow: None;
+}
+
+
+.mdl-mini-footer {
+  height: 80px;
+  color: red;
+}
+
+.mdl-layout__tab-bar-container {
+  position: relative;
+  height: 48px;
+  width: 80%;
+  border: 1px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mdl-layout.is-upgraded .mdl-layout__tab.is-active {
+  color: rgb(255, 255, 255);
+  border-radius: 20px 20px 0px 0px;
+  background-color: #075b9e;
+}
+
+.mdl-layout.is-upgraded .mdl-layout__tab.is-active .material-icons {
+  font-size: 28px;
+}
+
+.mdl-menu__item {
+  color: rgb(87, 115, 129);
+  height: 45px;
+  line-height: 50px;
+}
+
+.mdl-textfield__input {
+  margin-left: 10px;
+  padding: 0px;
+}
+
+
+.demo-list-control {
+  /* width: 300px; */
+  width: 100%;
+}
+
+.demo-list-control2 {
+  width: 350px;
+}
+
+.mdl-menu__container.is-visible {
+  opacity: 0.8 !important;
+}
+
+.demo-list-radio {
+  display: inline;
+}
+
+.thin-row {
+  height: 28px;
+  padding-right: 5px;
+}
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  line-height: 14px;
+  background: transparent;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+  /* 16px 40px;  padding: 0; */
+  padding-left: 10px;
+  padding-top: 1px;
+  padding-right: 5px;
+  color: #303e45;
+  /* background-color: aquamarine; */
+}
+
+.mdl-navigation__link .material-icons {
+  /* vertical-align: middle; */
+  margin-right: 10px;
+}
+
+.mdl-chip--contact2 {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  padding: 0 25px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 40px;
+  border-radius: 25px;
+  background-color: #f1f1f1;
+}
+
+.mdl-chip--contact2 img {
+  float: left;
+  margin: 0 10px 0 -25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.mdl-chip--contact {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  /* padding: 0 25px; */
+  height: 20px;
+  color: #c0cbd1;
+  font-size: 10px;
+  /* line-height: 20px; */
+  border-radius: 25px;
+  background-color: transparent;
+}
+
+.mdl-chip--contact img {
+  float: left;
+  /* margin: 0 10px 0 -25px; */
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.mdl-chip--small {
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
+  color: #333;
+  border-radius: 25px;
+  background-color: transparent;
+}
+
+
+
+.mdl-list__item .mdl-list__item-primary-content .material-icons {
+  padding-right: 10px;
+}
+
+
+
+/** Shadows **/
+.paper-shadow-animated.paper-shadow {
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.paper-shadow-top-z-1 {
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+}
+
+.paper-shadow-bottom-z-1 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.paper-shadow-top-z-2 {
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.paper-shadow-bottom-z-2 {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+}
+
+.paper-shadow-top-z-3 {
+  box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.paper-shadow-bottom-z-3 {
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+}
+
+.paper-shadow-top-z-4 {
+  box-shadow: 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
+
+.mdl-snackbar__icon {
+  color: #ffffff;
+  padding: 13px 0 0 24px;
+}
+
+.mdl-snackbar__action {
+  color: #ffffff;
+}
+
+*/
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+.mdl-snackbar {
+  background-color: rgba(255, 171, 64, .95);
+  border: 5px;
+  border-color: rgb(255, 0, 0);
+  color: #fff;
+  /* White text color */
+  text-align: center;
+  /* Centered text */
+  border-radius: 7px 7px 0px 0px;
+  /* Rounded borders */
+  min-width: 200px;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.mdl-snackbar333.show {
+  visibility: visible;
+  /* Show the snackbar */
+  bottom: 30px;
+  /* 30px from the bottom */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
